@@ -287,6 +287,11 @@ Resources:
       Cluster: !Ref ECSCluster
       ServiceName: OrderService
       TaskDefinition: !Ref TaskDefinition
+      DeploymentConfiguration:
+        MinimumHealthyPercent: 100
+        MaximumPercent: 200
+      DesiredCount: 2
+      HealthCheckGracePeriodSeconds: 30
       DesiredCount: 2
       LaunchType: FARGATE
       NetworkConfiguration:

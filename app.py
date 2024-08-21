@@ -8,7 +8,11 @@ CORS(app)  # This will enable CORS for all origins
 def create_order():
     order_id = request.args.get('orderId')
     
-    return jsonify({'status': 'Order confirmed', 'order_id': order_id}), 200
+    return jsonify({'status': 'Congratulations Order confirmed', 'order_id': order_id}), 200
+
+@app.route('/', methods=['GET'])
+def health_check():    
+    return jsonify({'status': 'Healthy'}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
