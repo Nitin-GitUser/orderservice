@@ -19,7 +19,7 @@ pipeline {
             steps {
                 sh 'docker tag order-service ${registry}:${BUILD_NUMBER}'
                 sh 'docker tag order-service ${registry}:latest'
-                withDockerRegistry([credentialsId: 'nagarro', url: '']){
+                withDockerRegistry([credentialsId: 'DockerHub', url: '']){
                     sh 'docker push ${registry}:${BUILD_NUMBER}'
                     sh 'docker push ${registry}:latest'
                 }
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Docker Deployment') {
             steps {
-                withCredentials(bindings: [usernamePassword(credentialsId: "nagarro", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                withCredentials([aws(credentialsId: "nagarro")]) {
                     sh ''' 
                     aws cloudformation deploy \
                     --stack-name OrderServiceStack \
